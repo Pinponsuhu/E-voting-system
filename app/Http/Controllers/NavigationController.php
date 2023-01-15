@@ -21,10 +21,21 @@ class NavigationController extends Controller
         $this->middleware('auth');
     }
     public function index(){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::latest()->first();
+        if($election == null){
+            $electorate = 0;
+        $voters = 0;
+        $voted = 0;
+        }else{
         $electorate = Electorate::where('election_id', $election->id)->count();
         $voters = Voter::where('election_id', $election->id)->count();
         $voted = Voter::where('election_id', $election->id)->where('status','Voted')->count();
+        }
         return view('dashboard', [
             'voted' => $voted,
             'voters' => $voters,
@@ -36,6 +47,11 @@ class NavigationController extends Controller
         return view('position');
     }
     public function voters_list($id){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $voters = Voter::where('election_id',$id)->get();
         return view('voters-list',['voters'=> $voters, 'election' => $id]);
     }
@@ -43,6 +59,11 @@ class NavigationController extends Controller
         return view('votes-list');
     }
     public function official_overview(){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         // dd(auth()->user());
         $user = User::where('user_type', 'Official')->get();
         // dd($user);
@@ -52,6 +73,11 @@ class NavigationController extends Controller
     }
 
     public function add_official(Request $request){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $request->validate([
             'name' => 'required',
             'campus' => 'required',
@@ -87,6 +113,11 @@ class NavigationController extends Controller
     }
 
     public function official_dashboard(){
+        if(auth()->user()->user_type != "Official"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::where('status','Active')->latest()->first();
         return view('official-dashboard', ['election' => $election]);
     }
@@ -120,6 +151,7 @@ class NavigationController extends Controller
     }
 
     public function offical_password($id){
+
         return view('official-password', ['id' => $id]);
     }
 
@@ -135,6 +167,11 @@ class NavigationController extends Controller
     }
 
     public function offish_dash(){
+        if(auth()->user()->user_type != "Official"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::latest()->first();
         $electorate = Electorate::where('election_id', $election->id)->count();
         $voters = Voter::where('election_id', $election->id)->count();
@@ -147,6 +184,11 @@ class NavigationController extends Controller
     }
 
     public function official_voter_list(){
+        if(auth()->user()->user_type != "Official"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::latest()->first();
         $voters = Voter::where('election_id',$election->id)->get();
         return view('official_accreditation',['voters'=> $voters, 'election' => $election->id]);

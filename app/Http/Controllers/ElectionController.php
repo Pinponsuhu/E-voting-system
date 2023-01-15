@@ -15,14 +15,21 @@ class ElectionController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth');
     }
 
     public function index(LastElection $chart, LastVotePercentage $chart2){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::where('status','Closed')->count();
         // dd($election);
 
         $election_c = Election::latest()->first();
+        if($election != null){
         $presidency = Electorate::where('position','Presidency')->where('election_id', $election_c->id)->get();
         $ojo = Electorate::where('position','Vice Presidency(Ojo)')->where('election_id', $election_c->id)->get();
         $epe = Electorate::where('position','Vice Presidency(Epe)')->where('election_id', $election_c->id)->get();
@@ -32,7 +39,18 @@ class ElectionController extends Controller
         $ass_sec = Electorate::where('position','Ass. Gen. Secretary')->where('election_id', $election_c->id)->get();
         $welfare = Electorate::where('position','Welfare Director')->where('election_id', $election_c->id)->get();
         $social = Electorate::where('position','Social Director')->where('election_id', $election_c->id)->get();
+        }else{
+            $ojo = null;
+            $presidency = null;
 
+        $epe = null;
+        $ikeja = null;
+        $tresurer =null;
+        $gen_sec = null;
+        $ass_sec = null;
+        $welfare =null;
+        $social =null;
+        }
         return view('election', [
             'chart' => $chart->build(),
             'chart2' => $chart2->build(),
@@ -51,6 +69,11 @@ class ElectionController extends Controller
     }
 
     public function add_new(Request $request){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $today = Carbon::today()->format('Y-m-d');
         // dd($request->election_date);
         $election = $request->validate([
@@ -64,16 +87,31 @@ class ElectionController extends Controller
         return redirect()->route('election')->with('msg',"Election has been register successfully");
     }
     public function election_dashboard(){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $elections = Election::latest()->get();
         return view('election-dashboard', ['elections'=> $elections]);
     }
 
     public function all_election(){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::where('status','Active')->get();
         // dd($election);
     }
 
     public function election_details($id){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $election = Election::find($id);
         // dd(now());
         $candidates = Electorate::where('election_id',$id)->get();
@@ -81,6 +119,11 @@ class ElectionController extends Controller
     }
 
     public function add_candidate(Request $request){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $request->validate([
             'image' => 'required|mimes:png,jpg,jpeg|max:1024',
             'position' => 'required',
@@ -107,6 +150,11 @@ class ElectionController extends Controller
     }
 
     public function toggleDisabled($id){
+        if(auth()->user()->user_type != "Admin"){
+            auth()->logout();
+
+            return redirect()->route('login');
+        }
         $user = User::find($id);
 
         $user->is_disabled = !$user->is_disabled;

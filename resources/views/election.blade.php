@@ -37,114 +37,120 @@
             <h1 class="font-bold text-2xl text-gray-900">All Past Election Results</h1>
         </div>
         {{-- {{ dd($presidency) }} --}}
-        <div class="mt-4">
-            <table class="w-full">
-                <tbody>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Presidency</td>
-                        @foreach ($presidency as $president)
-                        @php
-                            $p_count = App\Models\VotingHistory::where('presidency',$president->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-100 font-semibold text-md">{{ $president->fullname }}: {{ $p_count }}</td>
-                        @endforeach
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Ojo)</td>
-                        @foreach ($ojos as $ojo)
-                        @php
-                            $ojo_c = App\Models\VotingHistory::where('ojo',$ojo->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ojo->fullname }}: {{ $ojo_c }}</td>
-
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Epe)</td>
-                        @foreach ($epes as $epe)
-                        @php
-                            $epe_c = App\Models\VotingHistory::where('epe',$epe->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $epe->fullname }}: {{ $epe_c }}</td>
-
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Ikeja)</td>
-                        @foreach ($ikejas as $ikeja)
-                        @php
-                            $ikeja_c = App\Models\VotingHistory::where('ikeja',$ikeja->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ikeja->fullname }}: {{ $ikeja_c }}</td>
-
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Treasurer</td>
-                        @foreach ($tresurers as $tresurer)
-                        @php
-                            $tresurer_c = App\Models\VotingHistory::where('tresurer',$tresurer->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-100 font-semibold text-md">{{ $tresurer->fullname }}: {{ $tresurer_c }}</td>
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Gen. Secretary</td>
-                        @foreach ($gen_secs as $gen_sec)
-                        @php
-                            $gen_sec_c = App\Models\VotingHistory::where('gen_sec',$gen_sec->id)->count();
-
-                            // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $gen_sec->fullname }}: {{ $gen_sec_c }}</td>
-                        @endforeach
-
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Ass. Gen. Secretary</td>
-                        @foreach ($ass_secs as $ass_sec)
-                        @php
-                        $ass_sec_c = App\Models\VotingHistory::where('ass_gen_sec',$ass_sec->id)->count();
+       @if ($election != null)
+       <div class="mt-4">
+        <table class="w-full">
+            <tbody>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Presidency</td>
+                    @foreach ($presidency as $president)
+                    @php
+                        $p_count = App\Models\VotingHistory::where('presidency',$president->id)->count();
 
                         // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ass_sec->fullname }}: {{ $ass_sec_c }}</td>
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Welfare Director</td>
-                        @foreach ($welfares as $welfare)
-                        @php
-                        $welfare_c = App\Models\VotingHistory::where('welfare',$welfare->id)->count();
+                    @endphp
+                    <td class="p-3 bg-gray-100 font-semibold text-md">{{ $president->fullname }}: {{ $p_count }}</td>
+                    @endforeach
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Ojo)</td>
+                    @foreach ($ojos as $ojo)
+                    @php
+                        $ojo_c = App\Models\VotingHistory::where('ojo',$ojo->id)->count();
 
                         // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-100 font-semibold text-md">{{ $welfare->fullname }}: {{ $welfare_c }}</td>
-                        @endforeach
-                    </tr>
-                    <tr class="border-b-2 border-gray-500">
-                        <td class="p-3 bg-green-200 font-semibold text-md">Social Director</td>
-                        @foreach ($socials as $social)
-                        @php
-                        $social_c = App\Models\VotingHistory::where('social',$social->id)->count();
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ojo->fullname }}: {{ $ojo_c }}</td>
+
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Epe)</td>
+                    @foreach ($epes as $epe)
+                    @php
+                        $epe_c = App\Models\VotingHistory::where('epe',$epe->id)->count();
 
                         // dd($p_count);
-                        @endphp
-                        <td class="p-3 bg-gray-200 font-semibold text-md">{{ $social->fullname }}: {{ $social_c }}</td>
-                        @endforeach
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $epe->fullname }}: {{ $epe_c }}</td>
+
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Vice Presidency(Ikeja)</td>
+                    @foreach ($ikejas as $ikeja)
+                    @php
+                        $ikeja_c = App\Models\VotingHistory::where('ikeja',$ikeja->id)->count();
+
+                        // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ikeja->fullname }}: {{ $ikeja_c }}</td>
+
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Treasurer</td>
+                    @foreach ($tresurers as $tresurer)
+                    @php
+                        $tresurer_c = App\Models\VotingHistory::where('tresurer',$tresurer->id)->count();
+
+                        // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-100 font-semibold text-md">{{ $tresurer->fullname }}: {{ $tresurer_c }}</td>
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Gen. Secretary</td>
+                    @foreach ($gen_secs as $gen_sec)
+                    @php
+                        $gen_sec_c = App\Models\VotingHistory::where('gen_sec',$gen_sec->id)->count();
+
+                        // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $gen_sec->fullname }}: {{ $gen_sec_c }}</td>
+                    @endforeach
+
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Ass. Gen. Secretary</td>
+                    @foreach ($ass_secs as $ass_sec)
+                    @php
+                    $ass_sec_c = App\Models\VotingHistory::where('ass_gen_sec',$ass_sec->id)->count();
+
+                    // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $ass_sec->fullname }}: {{ $ass_sec_c }}</td>
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Welfare Director</td>
+                    @foreach ($welfares as $welfare)
+                    @php
+                    $welfare_c = App\Models\VotingHistory::where('welfare',$welfare->id)->count();
+
+                    // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-100 font-semibold text-md">{{ $welfare->fullname }}: {{ $welfare_c }}</td>
+                    @endforeach
+                </tr>
+                <tr class="border-b-2 border-gray-500">
+                    <td class="p-3 bg-green-200 font-semibold text-md">Social Director</td>
+                    @foreach ($socials as $social)
+                    @php
+                    $social_c = App\Models\VotingHistory::where('social',$social->id)->count();
+
+                    // dd($p_count);
+                    @endphp
+                    <td class="p-3 bg-gray-200 font-semibold text-md">{{ $social->fullname }}: {{ $social_c }}</td>
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
+    </div>
+       @else
+            <div>
+                <h1 class="text-xl text-center italic my-5">No previous election was found</h1>
+            </div>
+       @endif
         <div id="new-election" class="fixed hidden top-0 left-0 bg-gray-900 bg-opacity-80 h-screen w-screen flex justify-center items-center">
             <div class="w-80 md:w-5/12 bg-white rounded-md p-6">
                 <div class="flex justify-end mb-4">
